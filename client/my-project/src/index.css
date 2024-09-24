@@ -1,3 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+body {
+    background: url(https://demos.creative-tim.com/vision-ui-dashboard-react/static/media/body-background.9e7d96f6.png) 0% 0% / cover;
+}
