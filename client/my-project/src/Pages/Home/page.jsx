@@ -1,8 +1,18 @@
+// eslint-disable-next-line no-unused-vars
 import React from 'react'
+import StatCard from '../../Partials/StatsCard/page'
+import AnalyticsCard from '../../Partials/AnalyticsCard/page'
 
 const Page = () => {
   return (
-    <div className="text-white">Page1</div>
+    <div className="">
+      <div className='mt-4'>
+        <StatCard/>
+      </div>
+      <div className='mt-2'>
+      <AnalyticsCard/>
+      </div>
+    </div>
   )
 }
 

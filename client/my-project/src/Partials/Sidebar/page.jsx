@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import StarIcon from "@mui/icons-material/Star"; // Import Star icon
 
@@ -46,9 +46,15 @@ const Sidebar = () => {
 
       {/* Sidebar */}
       <div
-        className={`fixed z-40 top-0 left-0 h-full min-h-screen bg-[#0f1846] text-white w-72 p-3 lg:rounded-xl md:rounded-xl sm:rounded-r-xl rounded-r-xl  transition-transform duration-300 ease-in-out ${
+        className={`fixed z-40 top-0 left-0 h-full min-h-screen  text-white w-72 p-3 lg:rounded-xl md:rounded-xl sm:rounded-r-xl rounded-r-xl  transition-transform duration-300 ease-in-out ${
           isOpen ? "translate-x-0" : "-translate-x-full"
-        } lg:translate-x-0 lg:static`}
+        } lg:translate-x-0 lg:static`} style={{
+          backgroundImage:
+            "url('https://demos.creative-tim.com/vision-ui-dashboard-react/static/media/body-background.9e7d96f6.png')",
+          backgroundPosition: "top left", // Focus on the top-left corner
+          backgroundSize: "auto", // Ensure the image is not stretched
+          backgroundRepeat: "no-repeat", // Prevent repeating
+        }}
       >
         <div className="flex justify-start gap-2 items-start mb-4">
           <Link href={"/"}>
@@ -111,11 +117,11 @@ const Sidebar = () => {
             </div>
             <h1 className="text-white mt-1.5 font-extrabold text-sm">Need Help!</h1>
             <p className="text-white text-[13px]">Check our docs</p>
-            <button className="bg-gray-600 font-extrabold text-white py-1 px-10 rounded-xl mt-2 transition transform hover:scale-90 transition duration-500 ease-in-out">
+            <button className="bg-gray-600 font-extrabold text-white py-1 px-10 rounded-xl mt-2 transition transform hover:scale-90  duration-500 ease-in-out">
               Documentation
             </button>
           </div>
-          <button className="bg-blue-500 w-full mt-2 cursor-pointer font-extrabold text-sm text-white py-2 rounded-xl transition transform hover:scale-110 transition duration-500 ease-in-out">
+          <button className="bg-blue-500 w-full mt-2 cursor-pointer font-extrabold text-sm text-white py-2 rounded-xl transform hover:scale-110 transition duration-500 ease-in-out">
             Upgrade to PRO
           </button>
         </div>
