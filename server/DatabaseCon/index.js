@@ -1,5 +1,8 @@
 import mysql from "mysql";
+import { configDotenv } from "dotenv";
 
+
+configDotenv();
 let pool;
 function connectToDB() {
   if (!pool) {
