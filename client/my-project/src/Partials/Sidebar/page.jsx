@@ -22,7 +22,7 @@ const Sidebar = () => {
   return (
     <div>
       {/* Hamburger menu button */}
-      <div className="hamburger-icon lg:hidden lg:p-4 md:p-4 sm:p-2 p-2 fixed top-0 left-2 z-40">
+      <div className="hamburger-icon  lg:hidden lg:p-4 md:p-6 sm:p-4 p-4 fixed top-0 left-2 z-40">
         <button
           className="text-white bg-blue-950 p-2 rounded-lg"
           onClick={toggleSidebar}

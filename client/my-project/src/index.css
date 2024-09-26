@@ -1,8 +1,41 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,436;1,436&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-body {
-    background: url(https://demos.creative-tim.com/vision-ui-dashboard-react/static/media/body-background.9e7d96f6.png) 0% 0% / cover;
+/* Apply custom scrollbar styling to the whole website */
+body, * {
+    font-family: "Montserrat", sans-serif;
+    scrollbar-width: thin; /* For Firefox */
+    scrollbar-color: rgb(3, 3, 32) rgb(27, 27, 138) ; /* For Firefox */
 }
 
+body::-webkit-scrollbar,
+*::-webkit-scrollbar {
+    width: 12px; /* width of the entire scrollbar */
+}
+
+body::-webkit-scrollbar-track,
+*::-webkit-scrollbar-track {
+    background: orange; /* color of the tracking area */
+}
+
+body::-webkit-scrollbar-thumb,
+*::-webkit-scrollbar-thumb {
+    background-color: blue; /* color of the scroll thumb */
+    border-radius: 20px; /* roundness of the scroll thumb */
+    border: 3px solid orange; /* creates padding around scroll thumb */
+}
+
+/* Style for all container elements that may overflow */
+html, body, .sidebar, .content, .container {
+    overflow-y: auto; /* Ensure elements can scroll */
+}
+
+/* General background style for the entire website */
+body {
+    background: url(https://demos.creative-tim.com/vision-ui-dashboard-react/static/media/body-background.9e7d96f6.png) 0% 0% / cover;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
