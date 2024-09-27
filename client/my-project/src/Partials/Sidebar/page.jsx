@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import StarIcon from "@mui/icons-material/Star"; // Import Star icon
+import { useStateManage } from "../../Context/StateContext";
 
 const links = [
   { text: "Inbox", icon: "📥", to: "/", active: true },
@@ -14,6 +15,7 @@ const links = [
 
 const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const {isTransparent, isIconColor} = useStateManage();
 
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
@@ -46,15 +48,17 @@ const Sidebar = () => {
 
       {/* Sidebar */}
       <div
-        className={`fixed z-40 top-0 left-0 h-full min-h-screen  text-white w-72 p-3 lg:rounded-xl md:rounded-xl sm:rounded-r-xl rounded-r-xl  transition-transform duration-300 ease-in-out ${
-          isOpen ? "translate-x-0" : "-translate-x-full"
-        } lg:translate-x-0 lg:static`} style={{
-          backgroundImage:
-            "url('https://demos.creative-tim.com/vision-ui-dashboard-react/static/media/body-background.9e7d96f6.png')",
-          backgroundPosition: "top left", // Focus on the top-left corner
-          backgroundSize: "auto", // Ensure the image is not stretched
-          backgroundRepeat: "no-repeat", // Prevent repeating
-        }}
+       className={`fixed z-40 top-0 left-0 h-full min-h-screen text-white w-72 p-3 lg:rounded-xl md:rounded-xl sm:rounded-r-xl rounded-r-xl transition-transform duration-300 ease-in-out ${
+        isOpen ? "translate-x-0" : "-translate-x-full"
+      } lg:translate-x-0 lg:static`}
+      style={{
+        backgroundImage: isTransparent 
+          ? "none" 
+          : "url('https://demos.creative-tim.com/vision-ui-dashboard-react/static/media/body-background.9e7d96f6.png')",
+        backgroundPosition: "top left",
+        backgroundSize: "auto",
+        backgroundRepeat: "no-repeat",
+      }}
       >
         <div className="flex justify-start gap-2 items-start mb-4">
           <Link href={"/"}>
@@ -95,9 +99,8 @@ const Sidebar = () => {
               }`}
             >
               <Link to={link.to}>
-                <div className="flex text-sm items-center gap-1.5">
-                  <span className="">{link.icon}</span>
-                  <span>{link.text}</span>
+                <div className="flex text-sm items-center gap-2">
+                <span className={`${isIconColor} p-1 rounded-md`}>{link.icon}</span> {/* Use iconColor here */}                  <span>{link.text}</span>
                 </div>
               </Link>
             </li>

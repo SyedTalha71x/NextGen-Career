@@ -1,13 +1,14 @@
 /* eslint-disable no-unused-vars */
 import React from "react";
 import NotificationsIcon from '@mui/icons-material/Notifications';
-import SearchIcon from '@mui/icons-material/Search';
-import { TextField, InputAdornment } from "@mui/material";
+import { useStateManage } from "../../Context/StateContext";
 
 const Page = () => {
+  const {isNavbg} = useStateManage();
+
   return (
     <div className="lg:ml-2 md:ml-2 sm:ml-0 ml-0 cursor-pointer">
-      <div className="w-full lg:rounded-xl md:rounded-xl sm:rounded-b-lg rounded-b-lg bg-blue-600 text-white flex justify-end items-center p-4">
+      <div className={`w-full lg:rounded-xl md:rounded-xl sm:rounded-b-lg rounded-b-lg ${isNavbg} text-white flex justify-end items-center p-4`}>
         <div className="flex items-center space-x-4">
           <div>
             <NotificationsIcon className="text-yellow-500" style={{ fontSize: 30 }} />
