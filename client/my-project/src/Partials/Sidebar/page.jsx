@@ -4,8 +4,8 @@ import StarIcon from "@mui/icons-material/Star"; // Import Star icon
 import { useStateManage } from "../../Context/StateContext";
 
 const links = [
-  { text: "Inbox", icon: "📥", to: "/", active: true },
-  { text: "Starred", icon: "⭐", to: "/starred", active: false },
+  { text: "Home", icon: "📥", to: "/", active: true },
+  { text: "User Profile", icon: "⭐", to: "/profile", active: false },
   { text: "Send Email", icon: "✉️", to: "/email", active: false },
   { text: "Drafts", icon: "📄", to: "/drafts", active: false },
   { text: "All Mail", icon: "📬", to: "/all-mail", active: false },
@@ -94,13 +94,13 @@ const Sidebar = () => {
           {links.map((link, index) => (
             <li
               key={index}
-              className={`hover:bg-purple-600 p-2 transition-all duration-300 rounded-lg ${
+              className={`hover:bg-purple-600 lg:p-2 md:p-2 sm:p-1 p-1 transition-all duration-300 rounded-lg ${
                 link.active ? "bg-purple-600" : ""
               }`}
             >
               <Link to={link.to}>
                 <div className="flex text-sm items-center gap-2">
-                <span className={`${isIconColor} p-1 rounded-md`}>{link.icon}</span> {/* Use iconColor here */}                  <span>{link.text}</span>
+                <span className={`${isIconColor} p-1 rounded-md`}>{link.icon}</span>                  <span>{link.text}</span>
                 </div>
               </Link>
             </li>

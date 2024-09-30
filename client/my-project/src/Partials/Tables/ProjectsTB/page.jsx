@@ -107,9 +107,9 @@ const App = () => (
       columns={columns}
       dataSource={data}
       scroll={{ x: 'max-content' }} // Enables horizontal scrolling
-      pagination={false} // Disable pagination for a cleaner look
+      pagination={false} 
       bordered
-      rowClassName="bg-gray-800 text-white" // Semi-transparent background for table rows
+      rowClassName="bg-gray-800 text-white" 
     />
   </div>
 );

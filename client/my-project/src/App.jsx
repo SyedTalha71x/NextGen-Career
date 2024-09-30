@@ -3,7 +3,7 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Dashboard from '../src/Components/Dashboard/page';
 import Page1 from '../src/Pages/Home/page'
-import Email from '../src/Pages/Email/page'
+import Profile from '../src/Pages/Profile/page'
 import ModSidebar from '../src/Partials/ModSidebar/page'
 
 const App = () => {
@@ -14,7 +14,7 @@ const App = () => {
         <ModSidebar />
         <Routes>
           <Route path="/" element={<Page1 />} />
-          <Route path="/email" element={<Email />} />
+          <Route path="/profile" element={<Profile />} />
         </Routes>
       </Dashboard>
     </Router>
