@@ -29,12 +29,14 @@ const Page = ({ children }) => {
 
   return (
     <OuterContainer>
-      <div className="flex h-full overflow-hidden lg:m-3 md:m-2 sm:m-0 m-0">
+      <div className="flex h-full overflow-hidden  lg:m-3 md:m-2 sm:m-0 m-0">
         {/* Sidebar */}
         <Sidebar isTransparent={isTransparent} handleSidenavTypeChange={handleSidenavTypeChange} />
 
-        <div className="flex-1 flex flex-col">
-          <Navbar />
+        <div className="flex-1 flex flex-col ">
+          <div className=" ">
+          <Navbar   />
+          </div>
           <Main>{children}</Main>
         </div>
       </div>

@@ -9,7 +9,7 @@ import Analytics from "@mui/icons-material/Analytics";
 const Page = () => {
   return (
     <div className="">
-      <div className="grid grid-cols-1 w-full sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 lg:w-[97%] mx-auto w-full sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4">
         <div className="bg-[#04082b] cursor-pointer p-4 rounded-xl text-white">
           <div className="flex justify-between items-center">
             <div>

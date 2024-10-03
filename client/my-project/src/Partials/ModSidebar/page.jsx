@@ -106,7 +106,7 @@ const Sidebar = () => {
       {/* Toggle button at bottom-right */}
       <div className="fixed bottom-2 right-10">
         <button
-          className="bg-blue-500 text-white p-3 rounded-full shadow-lg"
+          className="bg-blue-500 z-50 text-white p-3 rounded-full shadow-lg"
           onClick={toggleSidebar}
         >
           <ArrowUpwardIcon />
