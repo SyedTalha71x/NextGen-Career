@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import React from 'react';
 
-const Signup = () => {
+const ResetPassword = () => {
   return (
     <div className="h-screen flex items-stretch">
       {/* Left Side - Background Image with Heading */}
@@ -16,59 +16,39 @@ const Signup = () => {
         </div>
       </div>
 
-      {/* Right Side - Login Form with Gradient Background */}
+      {/* Right Side - Reset Password Form */}
       <div className="w-full md:w-1/2 flex items-center justify-center p-8" 
         style={{ 
           background: 'linear-gradient(159.02deg, rgb(15, 18, 59) 14.25%, rgb(9, 13, 46) 56.45%, rgb(2, 5, 21) 86.14%)' 
         }}>
         <div className="lg:w-[60%] md:w-full sm:w-full w-full">
-          <h2 className="text-4xl font-extrabold text-center text-white mb-10">Nice to see you!</h2>
+          <h2 className="text-4xl font-extrabold text-center text-white mb-10">Reset your password!</h2>
 
-          {/* Form */}
+          {/* Reset Password Form */}
           <form className="space-y-4">
-          <div>
-              <label htmlFor="name" className="block text-white">Username</label>
-              <input
-                type="name"
-                id="name"
-                placeholder="Your Username..."
-                className="w-full px-4 py-2 mt-2 border border-gray-300 rounded-md outline-none"
-              />
-            </div>
-
             <div>
-              <label htmlFor="email" className="block text-white">Email</label>
-              <input
-                type="email"
-                id="email"
-                placeholder="Your email..."
-                className="w-full px-4 py-2 mt-2 border border-gray-300 rounded-md outline-none"
-              />
-            </div>
-
-            <div>
-              <label htmlFor="password" className="block text-white">Password</label>
+              <label htmlFor="new-password" className="block text-white">New Password</label>
               <input
                 type="password"
-                id="password"
-                placeholder="Your password..."
+                id="new-password"
+                placeholder="Enter new password"
                 className="w-full px-4 py-2 mt-2 border border-gray-300 rounded-md outline-none"
               />
             </div>
 
+            <div>
+              <label htmlFor="confirm-password" className="block text-white">Confirm Password</label>
+              <input
+                type="password"
+                id="confirm-password"
+                placeholder="Confirm new password"
+                className="w-full px-4 py-2 mt-2 border border-gray-300 rounded-md outline-none"
+              />
+            </div>
 
             <button className="w-full py-2 text-sm capitalize bg-purple-600 hover:bg-purple-700 text-white font-bold rounded-lg transition duration-300">
-              SIGN UP
+              RESET PASSWORD
             </button>
-
-            <div className="text-center mt-4">
-              <p className="text-white">
-                Already have an account?{" "}
-                <a href="/login" className="text-gray-200 font-extrabold hover:underline">
-                  Sign in
-                </a>
-              </p>
-            </div>
           </form>
         </div>
       </div>
@@ -76,4 +56,4 @@ const Signup = () => {
   );
 };
 
-export default Signup;
+export default ResetPassword;

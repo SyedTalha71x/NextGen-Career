@@ -9,7 +9,6 @@ export const verifyPassword = (Storedhash, password) =>{
   const hash = CryptoJS.HmacSHA256(password, process.env.KEY).toString();
   return hash === Storedhash
 }
-
 export const generateToken = (userId, email, authType) => {
   const payload = { userId, email, authType };
   try {
@@ -19,3 +18,4 @@ export const generateToken = (userId, email, authType) => {
     console.log(error);
   }
 };
+
