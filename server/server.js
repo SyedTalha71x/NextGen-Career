@@ -2,6 +2,7 @@ import {configDotenv} from 'dotenv'
 import express from 'express'
 import { connectToDB } from './DatabaseCon/index.js';
 import userRoutes from './Routes/user-routes.js'
+import cors from 'cors'
 
 // Database Connection
 connectToDB();
@@ -12,6 +13,7 @@ configDotenv();
 // express setup
 const app = express();
 app.use(express.json());
+app.use(cors());
 
 // Routes Setup
 app.use('/api', userRoutes)

@@ -1,20 +1,48 @@
 /* eslint-disable no-unused-vars */
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import { useSnackbar } from 'notistack'; 
+
+const API_URL = import.meta.env.VITE_BACKEND_API_URL;
 
 const Login = () => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false); 
+  const { enqueueSnackbar } = useSnackbar(); 
+  const navigate = useNavigate();
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    setLoading(true); 
+    try {
+      const response = await axios.post(`${API_URL}/api/login`, {
+        email,
+        password,
+      });
+
+      const token = response.data.data.token;
+      localStorage.setItem('authToken', token);
+      enqueueSnackbar('Login successful!', { variant: 'success' });
+      navigate('/'); 
+    } catch (error) {
+      enqueueSnackbar('Login failed. Please check your credentials.', { variant: 'error' });
+    } finally {
+      setLoading(false); 
+    }
+  };
+
   return (
     <div className="h-screen flex items-stretch">
-      {/* Left Side - Background Image with Heading */}
       <div
         className="relative hidden md:block w-1/2 bg-cover"
         style={{
           backgroundImage:
             "url(https://demos.creative-tim.com/vision-ui-dashboard-react/static/media/signInImage.127192f6.png)",
-          opacity: 0.8, // Reduce the opacity of the background image
+          opacity: 0.8, 
         }}
       >
-        {/* Heading and Subheading */}
         <div className="absolute inset-0 flex flex-col items-center justify-center p-12 text-white">
           <h1 className="text-2xl font-semibold tracking-wide uppercase leading-tight">
             Inspired by the Future
@@ -25,7 +53,6 @@ const Login = () => {
         </div>
       </div>
 
-      {/* Right Side - Login Form with Gradient Background */}
       <div
         className="w-full md:w-1/2 flex items-center justify-center p-8"
         style={{
@@ -38,8 +65,7 @@ const Login = () => {
             Nice to see you!
           </h2>
 
-          {/* Form */}
-          <form className="space-y-4">
+          <form className="space-y-4" onSubmit={handleLogin}>
             <div>
               <label htmlFor="email" className="block text-white">
                 Email
@@ -49,6 +75,9 @@ const Login = () => {
                 id="email"
                 placeholder="Your email..."
                 className="w-full px-4 py-2 mt-2 border border-gray-300 rounded-md outline-none"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
               />
             </div>
 
@@ -61,21 +90,25 @@ const Login = () => {
                 id="password"
                 placeholder="Your password..."
                 className="w-full px-4 py-2 mt-2 border border-gray-300 rounded-md outline-none"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
               />
             </div>
 
-            {/* Forgot Password Link */}
             <div className="flex items-center justify-end">
               <a href="/verifyemail" className="text-gray-200 hover:underline">
                 Forgot Password?
               </a>
             </div>
 
-            <Link to={"/"}>
-              <button className="w-full py-2 text-sm capitalize bg-purple-600 hover:bg-purple-700 text-white font-bold rounded-lg transition duration-300">
-                SIGN IN
-              </button>
-            </Link>
+            <button
+              type="submit"
+              className={`w-full py-2 text-sm capitalize text-white font-bold rounded-lg transition duration-300 ${loading ? 'bg-gray-500' : 'bg-purple-600 hover:bg-purple-700'}`}
+              disabled={loading} 
+            >
+              {loading ? 'Loading...' : 'SIGN IN'} 
+            </button>
 
             <div className="text-center mt-4">
               <p className="text-white">

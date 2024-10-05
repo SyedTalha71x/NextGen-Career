@@ -12,15 +12,17 @@ import VerifyEmail from '../src/Authentication/VerifyEmail/page';
 import OTP from '../src/Authentication/OTP/page';
 import ResetPassword from '../src/Authentication/ResetPassword/page';
 
-// Sample authentication status (replace with real logic)
-const isAuthenticated = false; 
 
+const isAuthenticated = () => {
+  const token = localStorage.getItem('authToken');
+  return token !== null; 
+}
 const ProtectedRoute = ({ children }) => {
-  return isAuthenticated ? children : <Navigate to="/login" />;
+  return isAuthenticated() ? children : <Navigate to="/login" />;
 };
 
 const PublicRoute = ({ children }) => {
-  return isAuthenticated ? <Navigate to="/" /> : children;
+  return isAuthenticated() ? <Navigate to="/" /> : children;
 };
 
 const App = () => {
@@ -37,7 +39,7 @@ const App = () => {
         <Route path="/profile" element={<ProtectedRoute><Dashboard><ModSidebar /><Profile /></Dashboard></ProtectedRoute>} />
 
         {/* Fallback for any undefined route */}
-        <Route path="*" element={<Navigate to={isAuthenticated ? "/" : "/login"} />} />
+        <Route path="*" element={<Navigate to={isAuthenticated() ? "/" : "/login"} />} />
       </Routes>
     </Router>
   );
