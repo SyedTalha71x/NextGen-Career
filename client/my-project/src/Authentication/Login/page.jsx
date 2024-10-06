@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useSnackbar } from 'notistack'; 
 
-const API_URL = import.meta.env.PRODUCTION_API_URL; // Use only the production variable
+const API_URL = import.meta.env.PRODUCTION_API_URL || import.meta.env.VITE_BACKEND_API_URL;
 console.log("VITE_BACKEND_API_URL:", import.meta.env.VITE_BACKEND_API_URL);
 console.log("PRODUCTION_API_URL:", import.meta.env.PRODUCTION_API_URL);
 console.log("API URL:", API_URL);
