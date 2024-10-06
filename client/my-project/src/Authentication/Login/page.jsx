@@ -5,7 +5,7 @@ import axios from 'axios';
 import { useSnackbar } from 'notistack'; 
 
 const API_URL = import.meta.env.PRODUCTION_API_URL || import.meta.env.VITE_BACKEND_API_URL;
-
+console.log("API URL:", API_URL); // Log the API URL to see its value
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
