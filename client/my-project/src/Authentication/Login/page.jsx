@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useSnackbar } from 'notistack'; 
 
-const API_URL = import.meta.env.VITE_BACKEND_API_URL;
+const API_URL = import.meta.env.VITE_BACKEND_API_URL || import.meta.env.PRODUCTION_API_URL;
 
 const Login = () => {
   const [email, setEmail] = useState('');
