@@ -3,18 +3,21 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useSnackbar } from 'notistack'; 
+import {useStateManage} from '../../Context/StateContext'
 
-const API_URL = import.meta.env.VITE_PRODUCTION_API_URL || import.meta.env.VITE_BACKEND_API_URL;
-console.log("VITE_BACKEND_API_URL:", import.meta.env.VITE_BACKEND_API_URL);
-console.log("PRODUCTION_API_URL:", import.meta.env.VITE_PRODUCTION_API_URL);
-console.log("API URL:", API_URL);
 
 const Login = () => {
+  const {API_URL} = useStateManage();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false); 
+  const [showPassword, setshowPassword] = useState(false)
   const { enqueueSnackbar } = useSnackbar(); 
   const navigate = useNavigate();
+
+  const handleShowPassword = () =>{
+    setshowPassword((prev)=>!prev)
+  }
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -89,7 +92,7 @@ const Login = () => {
                 Password
               </label>
               <input
-                type="password"
+                type={showPassword ? 'text':'password'}
                 id="password"
                 placeholder="Your password..."
                 className="w-full px-4 py-2 mt-2 border border-gray-300 rounded-md outline-none"
@@ -98,6 +101,19 @@ const Login = () => {
                 required
               />
             </div>
+            <div className="flex items-center">
+              <input
+                type="checkbox"
+                id="showPassword"
+                checked={showPassword}
+                onChange={handleShowPassword} 
+                className="mr-2"
+              />
+              <label htmlFor="showPassword" className="text-white">
+                Show Password
+              </label>
+            </div>
+
 
             <div className="flex items-center justify-end">
               <a href="/verifyemail" className="text-gray-200 hover:underline">

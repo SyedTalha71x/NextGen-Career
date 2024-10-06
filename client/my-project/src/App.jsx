@@ -11,6 +11,7 @@ import Signup from '../src/Authentication/Signup/page';
 import VerifyEmail from '../src/Authentication/VerifyEmail/page';
 import OTP from '../src/Authentication/OTP/page';
 import ResetPassword from '../src/Authentication/ResetPassword/page';
+import Career from '../src/Pages/Career/page'
 
 
 const isAuthenticated = () => {
@@ -37,6 +38,7 @@ const App = () => {
 
         <Route path="/" element={<ProtectedRoute><Dashboard><ModSidebar /><Page1 /></Dashboard></ProtectedRoute>} />
         <Route path="/profile" element={<ProtectedRoute><Dashboard><ModSidebar /><Profile /></Dashboard></ProtectedRoute>} />
+        <Route path="/career" element={<ProtectedRoute><Dashboard><ModSidebar /><Career /></Dashboard></ProtectedRoute>} />
 
         {/* Fallback for any undefined route */}
         <Route path="*" element={<Navigate to={isAuthenticated() ? "/" : "/login"} />} />

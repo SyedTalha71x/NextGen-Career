@@ -6,7 +6,7 @@ import { useStateManage } from "../../Context/StateContext";
 const links = [
   { text: "Home", icon: "📥", to: "/", active: true },
   { text: "User Profile", icon: "⭐", to: "/profile", active: false },
-  { text: "Send Email", icon: "✉️", to: "/email", active: false },
+  { text: "Career", icon: "✉️", to: "/career", active: false },
   { text: "Drafts", icon: "📄", to: "/drafts", active: false },
   { text: "All Mail", icon: "📬", to: "/all-mail", active: false },
   { text: "Trash", icon: "🗑️", to: "/trash", active: false },
@@ -23,7 +23,6 @@ const Sidebar = () => {
 
   return (
     <div>
-      {/* Hamburger menu button */}
       <div className="hamburger-icon  lg:hidden lg:p-4 md:p-6 sm:p-4 p-4 fixed top-0 left-2 z-40">
         <button
           className="text-white bg-blue-950 p-2 rounded-lg"
@@ -46,7 +45,6 @@ const Sidebar = () => {
         </button>
       </div>
 
-      {/* Sidebar */}
       <div
        className={`fixed z-40 top-0 left-0 h-full min-h-screen text-white w-72 p-3 lg:rounded-xl md:rounded-xl sm:rounded-r-xl rounded-r-xl transition-transform duration-300 ease-in-out ${
         isOpen ? "translate-x-0" : "-translate-x-full"

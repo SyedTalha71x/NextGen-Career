@@ -5,6 +5,12 @@ import { useStateManage } from "../../Context/StateContext";
 
 const Page = () => {
   const {isNavbg} = useStateManage();
+  const logout = () =>{
+    localStorage.removeItem('authToken')
+    setTimeout(() => {
+      window.location.reload();
+    }, 1000);
+  }
 
   return (
     <div className="lg:ml-2 md:ml-2 sm:ml-0  ml-0 cursor-pointer">
@@ -19,6 +25,9 @@ const Page = () => {
               src="https://e7.pngegg.com/pngimages/799/987/png-clipart-computer-icons-avatar-icon-design-avatar-heroes-computer-wallpaper-thumbnail.png"
               alt="Bordered avatar"
             />
+          </div>
+          <div>
+            <button onClick={logout} className="py-2 px-8 hover:bg-blue-800 transition-all duration-500 cursor-pointer rounded-lg text-white bg-blue-950 ">Logout</button>
           </div>
         </div>
       </div>
