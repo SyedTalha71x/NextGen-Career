@@ -2,13 +2,13 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { useSnackbar } from 'notistack';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { useStateManage } from '../../Context/StateContext';
 
 const VerifyEmail = () => {
-  const { API_URL } = useStateManage();
-  const [email, setEmail] = useState("");
-  const { enqueueSnackbar } = useSnackbar();
+  const { API_URL, setEmail } = useStateManage();
+  const [emailState, setEmailState] = useState("");
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
 
@@ -16,11 +16,12 @@ const VerifyEmail = () => {
     e.preventDefault();
     setLoading(true);
     try {
-      await axios.post(`${API_URL}/request-for-otp`, { email });
-      enqueueSnackbar('Verification email sent!', { variant: 'success' });
+      await axios.post(`${API_URL}/request-for-otp`, { email: emailState });
+      toast.success('Verification email sent!');
+      setEmail(emailState)
       navigate('/verifyotp');
     } catch (error) {
-      enqueueSnackbar('Failed to send verification email.', { variant: 'error' });
+      toast.error('Failed to send verification email.');
     } finally {
       setLoading(false);
     }
@@ -50,8 +51,8 @@ const VerifyEmail = () => {
               <label htmlFor="email" className="block text-white">Email</label>
               <input
                 type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                value={emailState}
+                onChange={(e) => setEmailState(e.target.value)}
                 id="email"
                 placeholder="Enter your email..."
                 className="w-full px-4 py-2 mt-2 border border-gray-300 rounded-md outline-none"
@@ -69,6 +70,8 @@ const VerifyEmail = () => {
           </form>
         </div>
       </div>
+
+      <ToastContainer position="top-right" autoClose={5000} hideProgressBar />
     </div>
   );
 };

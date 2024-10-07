@@ -10,14 +10,12 @@ const Sidebar = () => {
   const [isSelected, setisSelected] = useState('bg-purple-600')
   const { setTransparent, setOpaque, isIconColor, setisIconColor, setisNavbg } = useStateManage();
 
-  // Toggle the sidebar
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
   };
 
   return (
     <div>
-      {/* Sidebar */}
       <div
         className={`fixed top-0 right-0 cursor-pointer h-full lg:w-96 md:w-80 sm:w-64 w-full rounded-l-xl text-white p-6 transition-transform duration-500 transform  ${
           isOpen ? "translate-x-0" : "translate-x-full"
@@ -104,7 +102,7 @@ const Sidebar = () => {
       </div>
 
       {/* Toggle button at bottom-right */}
-      <div className="fixed bottom-2 right-10">
+      <div className="fixed bottom-2 right-7">
         <button
           className="bg-blue-500 z-50 text-white p-3 rounded-full shadow-lg"
           onClick={toggleSidebar}

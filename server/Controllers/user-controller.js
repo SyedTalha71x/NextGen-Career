@@ -118,7 +118,7 @@ export const requestForOTP = async (req, res) => {
     const { email } = req.body;
 
     if (!email) {
-      return FailureResponse(res, "Please enter email", 400);
+      return FailureResponse(res, "Please enter email",null, 400);
     }
     pool.query(VERIFY_OTP_USER_EXISTS_QUERY, [email], (err, result) => {
       if (err) {
@@ -189,7 +189,7 @@ export const verifyOTP = async (req, res) => {
     const {otp} = req.body;
 
     if(!otp){
-      return FailureResponse(res, 'Please enter OTP!', 400)
+      return FailureResponse(res, 'Please enter OTP!',null, 400)
     }
     pool.query(VERIFY_OTP_OF_USER, [otp], (err, result)=>{
       if (err) {
@@ -197,7 +197,7 @@ export const verifyOTP = async (req, res) => {
         return FailureResponse(res, "Internal Server Error", err.message, 500);
       }
       if(result.length === 0){
-        return FailureResponse(res, 'Invalid OTP', 400)
+        return FailureResponse(res, 'Invalid OTP',null, 400)
       }
 
       const {email, otp_expiration} = result[0];
@@ -206,7 +206,7 @@ export const verifyOTP = async (req, res) => {
       const expirationDATE = moment(otp_expiration);
 
       if(currentDate.isAfter(expirationDATE)){
-        return FailureResponse(res, 'Sorry OTP is expired', 400)
+        return FailureResponse(res, 'Sorry OTP is expired',null, 400)
       }
       return SuccessResponse(res, {email},'OTP is valid', 200)
     })
@@ -220,10 +220,10 @@ export const resetPassword = async (req, res) => {
     const {email, newPassword, confirmPassword} = req.body;
 
     if(!email || !newPassword || !confirmPassword){
-      return FailureResponse(res, 'Please provide full details', 400);
+      return FailureResponse(res, 'Please provide full details',null, 400);
     }
     if(newPassword !== confirmPassword){
-      return FailureResponse(res, 'Password is invalid', 400);
+      return FailureResponse(res, 'Password is invalid',null, 400);
     }
     pool.query(CHECK_USER_FOR_RESET_PASSWORD, [email], (err, results)=>{
       if (err) {

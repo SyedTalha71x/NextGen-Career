@@ -5,10 +5,11 @@ import { createContext, useState, useContext } from "react";
 const StateContext = createContext();
 
 export const StateProvider = ({ children }) => {
+  const [email, setEmail] = useState("")
   const [isTransparent, setIsTransparent] = useState(false);
   const [isIconColor, setisIconColor] = useState('bg-purple-600')
   const [isNavbg, setisNavbg] = useState('bg-purple-600')
-  const API_URL = import.meta.env.VITE_PRODUCTION_API_URL || import.meta.env.VITE_BACKEND_API_URL;
+  const API_URL = import.meta.env.VITE_BACKEND_API_URL || import.meta.env.VITE_PRODUCTION_API_URL;
   console.log("VITE_BACKEND_API_URL:", import.meta.env.VITE_BACKEND_API_URL);
   console.log("PRODUCTION_API_URL:", import.meta.env.VITE_PRODUCTION_API_URL);
   console.log("API URL:", API_URL);
@@ -24,7 +25,7 @@ export const StateProvider = ({ children }) => {
 
   return (
     <StateContext.Provider value={{ isTransparent, setTransparent, setOpaque , isIconColor, setisIconColor,
-        setisNavbg, isNavbg, API_URL
+        setisNavbg, isNavbg, API_URL, email, setEmail
     }}>
       {children}
     </StateContext.Provider>
