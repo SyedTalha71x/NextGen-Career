@@ -8,7 +8,7 @@ export const StateProvider = ({ children }) => {
   const [isTransparent, setIsTransparent] = useState(false);
   const [isIconColor, setisIconColor] = useState('bg-purple-600')
   const [isNavbg, setisNavbg] = useState('bg-purple-600')
-  const API_URL = import.meta.env.VITE_BACKEND_API_URL || import.meta.env.VITE_PRODUCTION_API_URL;
+  const API_URL = import.meta.env.VITE_PRODUCTION_API_URL || import.meta.env.VITE_BACKEND_API_URL;
   console.log("VITE_BACKEND_API_URL:", import.meta.env.VITE_BACKEND_API_URL);
   console.log("PRODUCTION_API_URL:", import.meta.env.VITE_PRODUCTION_API_URL);
   console.log("API URL:", API_URL);
