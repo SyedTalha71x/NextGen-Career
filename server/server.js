@@ -2,6 +2,7 @@ import {configDotenv} from 'dotenv'
 import express from 'express'
 import { connectToDB } from './DatabaseCon/index.js';
 import userRoutes from './Routes/user-routes.js'
+import RoadmapRoutes from './Routes/roadmap-routes.js'
 import cors from 'cors'
 
 // Database Connection
@@ -17,6 +18,7 @@ app.use(cors());
 
 // Routes Setup
 app.use('/', userRoutes)
+app.use('/',RoadmapRoutes)
 
 // server setup in action
 const PORT = process.env.PORT || 8000;

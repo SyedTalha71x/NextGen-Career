@@ -13,6 +13,11 @@ const ResetPassword = () => {
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const [showPassword, setshowPassword] = useState(false)
+
+  const handleShowPassword = () =>{
+    setshowPassword((prev)=> !prev)
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -77,7 +82,7 @@ const ResetPassword = () => {
                 New Password
               </label>
               <input
-                type="password"
+                type={showPassword ? 'text':'password'}
                 id="new-password"
                 placeholder="Enter new password"
                 className="w-full px-4 py-2 mt-2 border border-gray-300 rounded-md outline-none"
@@ -91,13 +96,25 @@ const ResetPassword = () => {
                 Confirm Password
               </label>
               <input
-                type="password"
+                 type={showPassword ? 'text':'password'}
                 id="confirm-password"
                 placeholder="Confirm new password"
                 className="w-full px-4 py-2 mt-2 border border-gray-300 rounded-md outline-none"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
               />
+            </div>
+            <div className="flex items-center justify-end">
+              <input
+                type="checkbox"
+                id="showPassword"
+                checked={showPassword}
+                onChange={handleShowPassword} 
+                className="mr-2"
+              />
+              <label htmlFor="showPassword" className="text-white">
+                Show Password
+              </label>
             </div>
 
             <button

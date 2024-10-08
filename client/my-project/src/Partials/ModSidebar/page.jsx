@@ -102,7 +102,7 @@ const Sidebar = () => {
       </div>
 
       {/* Toggle button at bottom-right */}
-      <div className="fixed bottom-2 right-7">
+      <div className="fixed bottom-2 right-7 z-50">
         <button
           className="bg-blue-500 z-50 text-white p-3 rounded-full shadow-lg"
           onClick={toggleSidebar}
