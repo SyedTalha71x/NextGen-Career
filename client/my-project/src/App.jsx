@@ -12,6 +12,8 @@ import VerifyEmail from '../src/Authentication/VerifyEmail/page';
 import OTP from '../src/Authentication/OTP/page';
 import ResetPassword from '../src/Authentication/ResetPassword/page';
 import Career from '../src/Pages/Career/page'
+import ExploreNow from '../src/Pages/ExploreNow/page'
+import SubscriptionPage from './Pages/Subscription/page';
 
 
 const isAuthenticated = () => {
@@ -39,6 +41,8 @@ const App = () => {
         <Route path="/" element={<ProtectedRoute><Dashboard><ModSidebar /><Page1 /></Dashboard></ProtectedRoute>} />
         <Route path="/profile" element={<ProtectedRoute><Dashboard><ModSidebar /><Profile /></Dashboard></ProtectedRoute>} />
         <Route path="/career" element={<ProtectedRoute><Dashboard><ModSidebar /><Career /></Dashboard></ProtectedRoute>} />
+        <Route path="/explorenow" element={<ProtectedRoute><Dashboard><ModSidebar /><ExploreNow /></Dashboard></ProtectedRoute>} />
+        <Route path="/subscriptions" element={<ProtectedRoute><Dashboard><ModSidebar /><SubscriptionPage /></Dashboard></ProtectedRoute>} />
 
         {/* Fallback for any undefined route */}
         <Route path="*" element={<Navigate to={isAuthenticated() ? "/" : "/login"} />} />

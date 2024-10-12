@@ -7,8 +7,8 @@ const links = [
   { text: "Home", icon: "📥", to: "/", active: true },
   { text: "User Profile", icon: "⭐", to: "/profile", active: false },
   { text: "Career", icon: "✉️", to: "/career", active: false },
-  { text: "Drafts", icon: "📄", to: "/drafts", active: false },
-  { text: "All Mail", icon: "📬", to: "/all-mail", active: false },
+  { text: "Explore Now", icon: "📄", to: "/explorenow", active: false },
+  { text: "Subscriptions", icon: "📬", to: "/subscriptions", active: false },
   { text: "Trash", icon: "🗑️", to: "/trash", active: false },
   { text: "Spam", icon: "🚫", to: "/spam", active: false },
 ];
