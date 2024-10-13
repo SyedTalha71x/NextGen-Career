@@ -115,7 +115,7 @@ const Page = () => {
           backgroundSize: "auto",
           backgroundRepeat: "no-repeat",
         }}>
-        <h2 className="text-xl font-extrabold p-2 text-gray-200">Sales Overview</h2> {/* Heading for the card */}
+        <h2 className="text-xl font-extrabold p-2 text-gray-200">Client Overview</h2> 
         <Chart options={chartOptions} series={chartSeries} type="area" height={250} className="p-4" />
       </div>
     </div>

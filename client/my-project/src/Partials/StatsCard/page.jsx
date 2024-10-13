@@ -55,7 +55,7 @@ const Page = () => {
         <div className="bg-[#04082b] cursor-pointer p-4 rounded-xl text-white">
           <div className="flex justify-between items-center">
             <div>
-              <h1 className="text-gray-400 font-semibold text-sm">Sales</h1>
+              <h1 className="text-gray-400 font-semibold text-sm">Reviews</h1>
               <div className="flex items-center">
                 <span className="font-extrabold text-xl text-white">$23,5000</span>
                 <p className="ml-1 text-green-600 mt-0.5 font-extrabold text-sm">+34%</p>

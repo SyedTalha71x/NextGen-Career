@@ -24,7 +24,7 @@ const Page = () => {
   };
 
   return (
-    <div className="cursor-pointer overflow-hidden w-full lg:p-4 md:p-4 sm:p-0 p-0">
+    <div className="cursor-pointer overflow-hidden w-full lg:p-3 md:p-3 sm:p-0 p-0">
       <div className="flex gap-1 items-center">
         <span className="text-2xl text-green-600">
           <UserOutlined />

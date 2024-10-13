@@ -14,6 +14,7 @@ import ResetPassword from '../src/Authentication/ResetPassword/page';
 import Career from '../src/Pages/Career/page'
 import ExploreNow from '../src/Pages/ExploreNow/page'
 import SubscriptionPage from './Pages/Subscription/page';
+import Documentation from './Pages/Documentation/page'
 
 
 const isAuthenticated = () => {
@@ -43,6 +44,7 @@ const App = () => {
         <Route path="/career" element={<ProtectedRoute><Dashboard><ModSidebar /><Career /></Dashboard></ProtectedRoute>} />
         <Route path="/explorenow" element={<ProtectedRoute><Dashboard><ModSidebar /><ExploreNow /></Dashboard></ProtectedRoute>} />
         <Route path="/subscriptions" element={<ProtectedRoute><Dashboard><ModSidebar /><SubscriptionPage /></Dashboard></ProtectedRoute>} />
+        <Route path="/documentation" element={<ProtectedRoute><Dashboard><ModSidebar /><Documentation /></Dashboard></ProtectedRoute>} />
 
         {/* Fallback for any undefined route */}
         <Route path="*" element={<Navigate to={isAuthenticated() ? "/" : "/login"} />} />

@@ -9,8 +9,7 @@ const links = [
   { text: "Career", icon: "✉️", to: "/career", active: false },
   { text: "Explore Now", icon: "📄", to: "/explorenow", active: false },
   { text: "Subscriptions", icon: "📬", to: "/subscriptions", active: false },
-  { text: "Trash", icon: "🗑️", to: "/trash", active: false },
-  { text: "Spam", icon: "🚫", to: "/spam", active: false },
+  { text: "Documentation", icon: "🗑️", to: "/documentation", active: false },
 ];
 
 const Sidebar = () => {
@@ -119,11 +118,11 @@ const Sidebar = () => {
             <h1 className="text-white mt-1.5 font-extrabold text-sm">Need Help!</h1>
             <p className="text-white text-[13px]">Check our docs</p>
             <button className="bg-gray-600 font-extrabold text-white py-1 px-10 rounded-xl mt-2 transition transform hover:scale-90  duration-500 ease-in-out">
-              Documentation
+             <Link to={"/documentation"}>Documentation</Link> 
             </button>
           </div>
           <button className="bg-blue-500 w-full mt-2 cursor-pointer font-extrabold text-sm text-white py-2 rounded-xl transform hover:scale-110 transition duration-500 ease-in-out">
-            Upgrade to PRO
+           <Link to={"/subscriptions"}> Upgrade to PRO</Link>
           </button>
         </div>
       </div>

@@ -10,9 +10,13 @@ import {
   BookOutlined,
   SolutionOutlined,
   DeploymentUnitOutlined,
+  InfoCircleOutlined,
 } from "@ant-design/icons";
+import { Tooltip } from "antd";
 
 const Roadmap = () => {
+  const [tooltipVisible, setTooltipVisible] = React.useState(false)
+
   const steps = [
     {
       stepNo: 1,
@@ -62,9 +66,20 @@ const Roadmap = () => {
     <div className="cursor-pointer">
       <div className="flex gap-1 p-2 items-center cursor-pointer">
         <span className="text-2xl text-green-600">
-          <DeploymentUnitOutlined />
-        </span>
         <h1 className="text-xl font-extrabold text-gray-100">Career Roadmap</h1>
+
+        </span>
+        <Tooltip
+            title="Steps is in paragraph and skills are in blue box in below cards"
+            trigger="click"
+            open={tooltipVisible}
+            onVisibleChange={setTooltipVisible}
+          >
+            <InfoCircleOutlined
+              className="text-white text-lg sm:text-xl cursor-pointer sm:mt-0" 
+              onClick={() => setTooltipVisible(!tooltipVisible)}
+            />
+          </Tooltip>
       </div>
       <div className="mt-4 bg-blue-950 rounded-xl lg:p-4 md:p-4 sm:p-2 p-2">
         <VerticalTimeline>

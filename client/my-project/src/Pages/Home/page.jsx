@@ -2,7 +2,6 @@
 import React from "react";
 import StatCard from "../../Partials/StatsCard/page";
 import AnalyticsCard from "../../Partials/AnalyticsCard/page";
-import ProjectsTB from '../../Partials/Tables/ProjectsTB/page'
 
 const Page = () => {
   return (
@@ -13,9 +12,7 @@ const Page = () => {
       <div className="mt-2">
         <AnalyticsCard />
       </div>
-      <div className="mt-2">
-        {/* <ProjectsTB/> */}
-      </div>
+
     </div>
   );
 };
