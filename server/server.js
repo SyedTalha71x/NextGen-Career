@@ -3,6 +3,7 @@ import express from 'express'
 import { connectToDB } from './DatabaseCon/index.js';
 import userRoutes from './Routes/user-routes.js'
 import RoadmapRoutes from './Routes/roadmap-routes.js'
+import ProfileRoutes from './Routes/profile-routes.js'
 import cors from 'cors'
 
 // Database Connection
@@ -19,6 +20,7 @@ app.use(cors());
 // Routes Setup
 app.use('/', userRoutes)
 app.use('/',RoadmapRoutes)
+app.use('/', ProfileRoutes)
 
 // server setup in action
 const PORT = process.env.PORT || 8000;

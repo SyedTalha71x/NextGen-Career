@@ -1,6 +1,7 @@
 import { connectToDB } from "../DatabaseCon/index.js";
 import { SuccessResponse, FailureResponse } from "../utilities/index.js";
 import { INSERT_PATH, INSERT_SKILL, INSERT_STEP } from "../Models/roadmap-model-db.js";
+import openai from "openai";
 import axios from 'axios';
 
 const pool = connectToDB();
@@ -19,17 +20,22 @@ export const generateRoadmap = async (PathName) => {
             ]
         }`;
 
-        const completion = await openai.chat.completions.create({
+        const completion = await axios.post("https://api.openai.com/v1/chat/completions", {
             model: "gpt-3.5-turbo",
             messages: [{
                 role: "user",
                 content: prompt
             }],
-            temperature: 0.7,
+            temperature: 0.7
+        }, {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${process.env.OPENAI_SECRET_KEY}` 
+            }
         });
 
-        const roadmapText = completion.choices[0].message.content;
-        
+        const roadmapText = completion.data.choices[0].message.content;
+
         try {
             JSON.parse(roadmapText);
             return roadmapText;
@@ -99,7 +105,7 @@ export const createPath = async (req, res) => {
             ));
         }
 
-        return SuccessResponse(res, { id: pathId }, 'Path is created and roadmap generated', 200);
+        return SuccessResponse(res, { id: pathId, roadmap: roadmap }, 'Path is created and roadmap generated', 200);
     } catch (error) {
         console.error("Error in createPath:", error);
         return FailureResponse(res, "Internal Server Error", error.message, 500);

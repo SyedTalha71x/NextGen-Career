@@ -1,15 +1,41 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   UserOutlined,
   DownloadOutlined,
   ShareAltOutlined,
   EditOutlined,
 } from "@ant-design/icons";
-import { Modal, Form, Input, Upload, Button, Row, Col } from "antd";
+import { Modal, Form, Input, Upload, Button, Row, Col, Spin } from "antd"; 
+import axios from "axios";
+import { useStateManage } from "../../Context/StateContext";
 
 const Page = () => {
+  const { API_URL } = useStateManage();
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    const token = localStorage.getItem("authToken");
+    const fetchProfile = async () => {
+      setLoading(true);
+      try {
+        const response = await axios.get(`${API_URL}/show-profile`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        setData(response.data.data.results);
+      } catch (error) {
+        console.log("Failed to catch the profile", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchProfile();
+  }, []);
 
   const handleEditClick = () => {
     setIsModalVisible(true);
@@ -31,87 +57,101 @@ const Page = () => {
         </span>
         <h1 className="text-xl font-extrabold text-gray-100">User Profile</h1>
       </div>
-      <div className="user_profile mt-5">
-        <div className="bg-[#1f1f28] p-5 text-white h-full w-full rounded-xl">
-          {/* Profile Header */}
-          <div className="flex lg:flex-row md:flex-row flex-col sm:flex-col lg:items-center md:items-center sm:items-start items-start gap-4 w-full">
-            <div>
-              <img
-                className="h-24 w-24 rounded-lg object-cover"
-                src="https://e7.pngegg.com/pngimages/799/987/png-clipart-computer-icons-avatar-icon-design-avatar-heroes-computer-wallpaper-thumbnail.png"
-                alt="User Avatar"
-              />
-            </div>
-            <div className="flex-1 w-full">
-              <div className="">
-                <h1 className="text-xl text-white font-bold">Mark Johnson</h1>
-                <div className="flex flex-wrap gap-2 items-center text-blue-500 text-sm mt-1">
-                  <span>mark@gmail.com</span>
-                  <span>12938192391</span>
-                  <span>www.mark.com</span>
-                </div>
-                <div className="mt-1 text-gray-400 text-sm lg:w-3/5 w-full">
-                  <p>
-                    A data analyst collects, interprets and visualizes data to
-                    uncover insights. A data analyst assigns a numerical value
-                    to business functions so performance.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Description Details */}
-          <div className="description_detail mt-10 w-full">
-            <h1 className="text-xl font-bold text-gray-100">Description</h1>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mt-4 w-full">
-              <div className="w-full">
-                <p className="border-b border-blue-500 pb-2 p-1 text-gray-400 text-sm mb-2">
-                  <span className="text-white text-sm">Full Name :</span> Andrew
-                  Jonson
-                </p>
-                <p className="border-b border-blue-500 pb-2 p-1 text-gray-400 text-sm mb-2">
-                  <span className="text-white text-sm">Date of Birth :</span>{" "}
-                  January 25, 1990
-                </p>
-                <p className="border-b border-blue-500 pb-2 p-1 text-gray-400 text-sm mb-2">
-                  <span className="text-white text-sm">Position :</span> Senior
-                  Data Analyst
-                </p>
-              </div>
-              <div className="w-full">
-                <p className="border-b border-blue-500 pb-2 p-1 text-gray-400 text-sm mb-2">
-                  <span className="text-white text-sm">Languages :</span>{" "}
-                  English, German, Spanish
-                </p>
-                <p className="border-b border-blue-500 pb-2 p-1 text-gray-400 text-sm mb-2">
-                  <span className="text-white text-sm">Country :</span> United
-                  States
-                </p>
-                <p className="border-b border-blue-500 pb-2 p-1 text-gray-400 text-sm mb-2">
-                  <span className="text-white text-sm">City :</span> New York
-                </p>
-              </div>
-            </div>
-          </div>
-
-          {/* Responsive Buttons */}
-          <div className="flex flex-wrap justify-end items-center gap-2 mt-10 w-full">
-            <button className="flex items-center justify-center py-2 px-8 text-sm text-white bg-purple-900 rounded-lg">
-              <DownloadOutlined className="mr-2" /> Download Resume
-            </button>
-            <button className="flex items-center justify-center py-2 px-8 text-sm text-white bg-yellow-600 rounded-lg">
-              <ShareAltOutlined className="mr-2" /> Share Profile
-            </button>
-            <button
-              className="flex items-center justify-center py-2 px-8 text-sm text-white bg-slate-500 rounded-lg"
-              onClick={handleEditClick}
-            >
-              <EditOutlined className="mr-2" /> Edit
-            </button>
-          </div>
+      
+      {loading ? (
+        <div className="flex justify-start items-center h-full">
+          <Spin size="large" />
         </div>
-      </div>
+      ) : (
+        <>
+          {data.length > 0 ? (
+            data.map((item) => (
+              <div className="user_profile mt-5" key={item.id}>
+                <div className="bg-[#1f1f28] p-5 text-white h-full w-full rounded-xl">
+                  <div className="flex lg:flex-row md:flex-row flex-col sm:flex-col lg:items-center md:items-center sm:items-start items-start gap-4 w-full">
+                    <div>
+                      <img
+                        className="h-24 w-24 rounded-lg object-cover"
+                        src={
+                          item.profile_picture ||
+                          "https://e7.pngegg.com/pngimages/799/987/png-clipart-computer-icons-avatar-icon-design-avatar-heroes-computer-wallpaper-thumbnail.png"
+                        }
+                        alt="User Avatar"
+                      />
+                    </div>
+                    <div className="flex-1 w-full">
+                      <div className="">
+                        <h1 className="text-xl text-white font-bold">
+                          {item.full_name}
+                        </h1>
+                        <div className="flex flex-wrap gap-2 items-center text-blue-500 text-sm mt-1">
+                          <span>{item.email}</span>
+                          <span>{item.phone}</span>
+                          <span>{item.website}</span>
+                        </div>
+                        <div className="mt-1 text-gray-400 text-sm lg:w-3/5 w-full">
+                          <p>{item.summary}</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="description_detail mt-10 w-full">
+                    <h1 className="text-xl font-bold text-gray-100">Description</h1>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mt-4 w-full">
+                      <div className="w-full">
+                        <p className="border-b border-blue-500 pb-2 p-1 text-gray-400 text-sm mb-2">
+                          <span className="text-white text-sm">Full Name :</span>{" "}
+                          {item.full_name}
+                        </p>
+                        <p className="border-b border-blue-500 pb-2 p-1 text-gray-400 text-sm mb-2">
+                          <span className="text-white text-sm">Date of Birth :</span>{" "}
+                          {new Date(item.date_of_birth).toLocaleDateString()}
+                        </p>
+                        <p className="border-b border-blue-500 pb-2 p-1 text-gray-400 text-sm mb-2">
+                          <span className="text-white text-sm">Position :</span>{" "}
+                          {item.position}
+                        </p>
+                      </div>
+                      <div className="w-full">
+                        <p className="border-b border-blue-500 pb-2 p-1 text-gray-400 text-sm mb-2">
+                          <span className="text-white text-sm">Languages :</span>{" "}
+                          {item.language}
+                        </p>
+                        <p className="border-b border-blue-500 pb-2 p-1 text-gray-400 text-sm mb-2">
+                          <span className="text-white text-sm">Country :</span>{" "}
+                          {item.country}
+                        </p>
+                        <p className="border-b border-blue-500 pb-2 p-1 text-gray-400 text-sm mb-2">
+                          <span className="text-white text-sm">City :</span>{" "}
+                          {item.city}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="flex flex-wrap justify-end items-center gap-2 mt-10 w-full">
+                    <button className="flex items-center justify-center py-2 px-8 text-sm text-white bg-purple-900 rounded-lg">
+                      <DownloadOutlined className="mr-2" /> Download Resume
+                    </button>
+                    <button className="flex items-center justify-center py-2 px-8 text-sm text-white bg-yellow-600 rounded-lg">
+                      <ShareAltOutlined className="mr-2" /> Share Profile
+                    </button>
+                    <button
+                      className="flex items-center justify-center py-2 px-8 text-sm text-white bg-slate-500 rounded-lg"
+                      onClick={handleEditClick}
+                    >
+                      <EditOutlined className="mr-2" /> Edit
+                    </button>
+                  </div>
+                </div>
+              </div>
+            ))
+          ) : (
+            <div className="text-white text-lg">No Data Found</div>
+          )}
+        </>
+      )}
 
       <Modal
         title="Edit User Profile"

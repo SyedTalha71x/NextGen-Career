@@ -23,16 +23,16 @@ import { SuccessResponse, FailureResponse } from "../utilities/index.js";
       const decoded = jwt.verify(token, process.env.KEY);
       req.user = decoded;
       next();
-    } catch (error) {
+    } catch (err) {
       console.log(err);
-      if (err.name === "JsonWebTokenError") {
-        return FailureResponse(res, "Invalid Token", null, 401);
+      switch (err.name) {
+        case "JsonWebTokenError":
+          return FailureResponse(res, "Invalid Token", null, 401);
+        case "TokenExpiredError":
+          return FailureResponse(res, "Authentication failed. Please log in again.", null, 401);
+        default:
+          return FailureResponse(res, "Authentication Failed", null, 400);
       }
-      if (err.name === "TokenExpiredError") {
-        return FailureResponse(res, "Token Expired", null, 401);
-      }
-
-      return FailureResponse(res, "Authentication Failed", null, 400);
     }
   } catch (error) {
     console.log(error);
