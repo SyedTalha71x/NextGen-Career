@@ -6,6 +6,7 @@ const StateContext = createContext();
 
 export const StateProvider = ({ children }) => {
   const [email, setEmail] = useState("")
+  const [pathId, setpathId] = useState()
   const [isTransparent, setIsTransparent] = useState(false);
   const [isIconColor, setisIconColor] = useState('bg-purple-600')
   const [isNavbg, setisNavbg] = useState('bg-purple-600')
@@ -25,7 +26,7 @@ export const StateProvider = ({ children }) => {
 
   return (
     <StateContext.Provider value={{ isTransparent, setTransparent, setOpaque , isIconColor, setisIconColor,
-        setisNavbg, isNavbg, API_URL, email, setEmail
+        setisNavbg, isNavbg, API_URL, email, setEmail, pathId, setpathId
     }}>
       {children}
     </StateContext.Provider>

@@ -7,15 +7,19 @@ import {
   ShareAltOutlined,
   EditOutlined,
 } from "@ant-design/icons";
-import { Modal, Form, Input, Upload, Button, Row, Col, Spin } from "antd"; 
+import { Modal, Form, Input, Upload, Button, Row, Col, Spin, message } from "antd"; 
 import axios from "axios";
 import { useStateManage } from "../../Context/StateContext";
+import { Token } from "@mui/icons-material";
+import moment from "moment";
 
 const Page = () => {
   const { API_URL } = useStateManage();
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState([]);
+  const [form] = Form.useForm();
+
 
   useEffect(() => {
     const token = localStorage.getItem("authToken");
@@ -28,6 +32,17 @@ const Page = () => {
           },
         });
         setData(response.data.data.results);
+        form.setFieldsValue({
+          fullName: response.data.data.results[0].full_name,
+          profilePicture: response.data.data.results[0].profile_picture,
+          dob: moment(response.data.data.results[0].date_of_birth).format("YYYY-MM-DD"), 
+          position: response.data.data.results[0].position,
+          bio: response.data.data.results[0].summary,
+          city: response.data.data.results[0].city,
+          country: response.data.data.results[0].country,
+          language:  response.data.data.results[0].language,
+        });
+
       } catch (error) {
         console.log("Failed to catch the profile", error);
       } finally {
@@ -45,9 +60,40 @@ const Page = () => {
     setIsModalVisible(false);
   };
 
-  const handleOk = () => {
-    setIsModalVisible(false);
+  const handleOk = async () => {
+    try{
+      const token = localStorage.getItem('authToken');
+      const values = form.getFieldsValue();
+
+      const response = await axios.post(`${API_URL}/update-profile`, {
+        full_name: values.fullName,
+        date_of_birth: values.dob,
+        position: values.position,
+        summary: values.bio,
+        city: values.city,
+        country: values.country,
+        profile_picture: values.profilePicture,
+        language: values.language
+      }, {
+        headers: {
+          'Content-Type':'application/json',
+          'Authorization':`Bearer ${token}`
+        }
+      })
+      message.success('Your Profile has been updated Successfully')
+      setIsModalVisible(false);
+      setTimeout(() => {
+        window.location.reload();
+      }, 1000);
+
+    }
+    catch(error){
+      console.log("Error while editing the details",error);
+      message.error('Failed to update your profile, please check!') 
+    }
   };
+
+
 
   return (
     <div className="cursor-pointer overflow-hidden w-full lg:p-3 md:p-3 sm:p-0 p-0">
@@ -155,7 +201,7 @@ const Page = () => {
 
       <Modal
         title="Edit User Profile"
-        visible={isModalVisible}
+        open={isModalVisible}
         onOk={handleOk}
         onCancel={handleCancel}
         okText="Update"
@@ -164,7 +210,7 @@ const Page = () => {
           className: "bg-purple-600 text-white",
         }}
       >
-        <Form layout="vertical" className="mt-4">
+        <Form form={form} layout="vertical" className="mt-4">
           <Row gutter={16}>
             <Col xs={24} sm={12}>
               <Form.Item label="Full Name" name="fullName">
@@ -172,15 +218,15 @@ const Page = () => {
               </Form.Item>
             </Col>
             <Col xs={24} sm={12}>
-              <Form.Item label="Email" name="email">
-                <Input placeholder="Enter your email" />
+              <Form.Item label="City" name="city">
+                <Input placeholder="Enter your city" />
               </Form.Item>
             </Col>
           </Row>
           <Row gutter={16}>
             <Col xs={24} sm={12}>
-              <Form.Item label="Phone" name="phone">
-                <Input placeholder="Enter your phone number" />
+              <Form.Item label="Country" name="country">
+                <Input placeholder="Enter your Country" />
               </Form.Item>
             </Col>
             <Col xs={24} sm={12}>
@@ -200,6 +246,13 @@ const Page = () => {
                 <Upload beforeUpload={() => false} showUploadList={false}>
                   <Button>Click to Upload</Button>
                 </Upload>
+              </Form.Item>
+            </Col>
+          </Row>
+          <Row gutter={16}>
+            <Col xs={24} sm={12}>
+              <Form.Item label="Language" name="language">
+                <Input placeholder="Enter your Language" />
               </Form.Item>
             </Col>
           </Row>

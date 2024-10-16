@@ -111,3 +111,77 @@ export const createPath = async (req, res) => {
         return FailureResponse(res, "Internal Server Error", error.message, 500);
     }
 };
+
+export const getPathDetails = async (req, res) => {
+    try {
+      const pathId = req.params.id;
+      const userId = req.user?.userId;
+  
+      if (!userId) {
+        return FailureResponse(res, 'User not authenticated', null, 401);
+      }
+  
+      if (!pathId) {
+        return FailureResponse(res, 'Path not found', null, 404);
+      }
+  
+      const pathQuery = 'SELECT * FROM path WHERE id = ?';
+      const stepsQuery = 'SELECT * FROM steps WHERE path_id = ?';
+      const skillsQuery = 'SELECT * FROM skills WHERE step_id = ?';
+
+      const pathResult = await new Promise((resolve, reject) => {
+        pool.query(pathQuery, [pathId], (err, results) => {
+          if (err) return reject(err);
+          resolve(results);
+        });
+      });
+  
+      if (!pathResult || pathResult.length === 0) {
+        return FailureResponse(res, 'Path not found', null, 404);
+      }
+  
+      const stepsResult = await new Promise((resolve, reject) => {
+        pool.query(stepsQuery, [pathId], (err, result) => {
+          if (err) return reject(err);
+          resolve(result);
+        });
+      });
+  
+      const steps = await Promise.all(
+        stepsResult.map(async (step) => {
+          const skillsResults = await new Promise((resolve, reject) => {
+            pool.query(skillsQuery, [step.id], (err, results) => {
+              if (err) return reject(err);
+              resolve(results);
+            });
+          });
+          return {
+            ...step,
+            skills: skillsResults,
+          };
+        })
+      );
+  
+      const roadmap = {
+        id: pathResult[0].id,
+        name: pathResult[0].name,
+        steps: steps.map((step) => ({
+          name: step.name,
+          skills: step.skills.map((skill) => ({
+            name: skill.name,
+          })),
+        })),
+      };
+  
+      return SuccessResponse(
+        res,
+        { id: roadmap.id, roadmap },
+        'Roadmap fetched successfully',
+        200
+      );
+    } catch (error) {
+      console.error('Error in getPathDetails:', error);
+      return FailureResponse(res, 'Internal Server Error', error.message, 500);
+    }
+  };
+  

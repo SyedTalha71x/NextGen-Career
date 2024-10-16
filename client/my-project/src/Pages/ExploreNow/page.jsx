@@ -1,9 +1,13 @@
-/* eslint-disable react/no-unescaped-entities */
-import { SendOutlined, InfoCircleOutlined } from '@ant-design/icons'
-import { Input, Button, Tooltip } from 'antd'
-import React from 'react'
 
-const { TextArea } = Input
+/* eslint-disable react/no-unescaped-entities */
+import { SendOutlined, InfoCircleOutlined } from '@ant-design/icons';
+import { Input, Button, Tooltip, message } from 'antd';
+import React from 'react';
+import { useStateManage } from '../../Context/StateContext';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios'; 
+
+const { TextArea } = Input;
 
 const examplePrompts = [
   "Build a successful tech startup",
@@ -18,16 +22,47 @@ const recentRoadmaps = [
 ];
 
 export default function Page() {
-  const [prompt, setPrompt] = React.useState('')
-  const [tooltipVisible, setTooltipVisible] = React.useState(false)
-  const [isLoading, setIsLoading] = React.useState(false)
+  const navigate = useNavigate();
+  const { setpathId } = useStateManage();
+  const [prompt, setPrompt] = React.useState('');
+  const [tooltipVisible, setTooltipVisible] = React.useState(false);
+  const [isLoading, setIsLoading] = React.useState(false);
 
   const handleSubmit = async () => {
+    if (!prompt.trim()) {
+      message.error('Please enter a valid prompt');
+      return;
+    }
+
     setIsLoading(true);
-    await new Promise(resolve => setTimeout(resolve, 2000));
-    console.log('Submitted prompt:', prompt);
-    setIsLoading(false);
-  }
+
+    try {
+      const response = await axios.post('http://localhost:8000/create-path', {
+        name: prompt
+      }, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('authToken')}`,
+        }
+      });
+
+      if (response.status === 200) {
+        message.success('Roadmap generated successfully!');
+        setpathId(response.data.data.id);
+        setTimeout(() => {
+          navigate('/career');
+        }, 1000);
+        console.log('Roadmap Data:', response.data); 
+      } else {
+        message.error(response.data.message || 'Failed to generate roadmap');
+      }
+    } catch (error) {
+      message.error('An error occurred. Please try again.');
+      console.error('Error in handleSubmit:', error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <div className="lg:p-4 md:p-4 sm:p-2 p-2 py-8 bg-gray-900 min-h-screen">
@@ -69,7 +104,7 @@ export default function Page() {
             <Button 
               key={index} 
               size="small" 
-              className="bg-gray-700 text-white border-none "
+              className="bg-gray-700 text-white border-none"
               onClick={() => setPrompt(example)}
             >
               {example}
@@ -93,7 +128,7 @@ export default function Page() {
             {prompt.length}/500
           </span>
         </div>
-        <div className='flex justify-end items-center'>
+        <div className="flex justify-end items-center">
           <Button
             type="primary"
             icon={<SendOutlined />}
@@ -120,5 +155,5 @@ export default function Page() {
         </div>
       </div>
     </div>
-  )
+  );
 }
