@@ -15,6 +15,8 @@ import Career from '../src/Pages/Career/page'
 import ExploreNow from '../src/Pages/ExploreNow/page'
 import SubscriptionPage from './Pages/Subscription/page';
 import Documentation from './Pages/Documentation/page'
+import Success from './Pages/Subscription/SubscriptionMode/Success/page'
+import Cancel from './Pages/Subscription/SubscriptionMode/Cancel/page'
 
 
 const isAuthenticated = () => {
@@ -45,6 +47,8 @@ const App = () => {
         <Route path="/explorenow" element={<ProtectedRoute><Dashboard><ModSidebar /><ExploreNow /></Dashboard></ProtectedRoute>} />
         <Route path="/subscriptions" element={<ProtectedRoute><Dashboard><ModSidebar /><SubscriptionPage /></Dashboard></ProtectedRoute>} />
         <Route path="/documentation" element={<ProtectedRoute><Dashboard><ModSidebar /><Documentation /></Dashboard></ProtectedRoute>} />
+        <Route path="/success" element={<ProtectedRoute><Dashboard><ModSidebar /><Success /></Dashboard></ProtectedRoute>} />
+        <Route path="/cancel" element={<ProtectedRoute><Dashboard><ModSidebar /><Cancel /></Dashboard></ProtectedRoute>} />
 
         {/* Fallback for any undefined route */}
         <Route path="*" element={<Navigate to={isAuthenticated() ? "/" : "/login"} />} />

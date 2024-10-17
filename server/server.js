@@ -5,6 +5,7 @@ import userRoutes from './Routes/user-routes.js'
 import RoadmapRoutes from './Routes/roadmap-routes.js'
 import ProfileRoutes from './Routes/profile-routes.js'
 import cors from 'cors'
+import SubscriptionRoutes from './Routes/subscription-routes.js'
 
 // Database Connection
 connectToDB();
@@ -21,6 +22,7 @@ app.use(cors());
 app.use('/', userRoutes)
 app.use('/',RoadmapRoutes)
 app.use('/', ProfileRoutes)
+app.use('/', SubscriptionRoutes)
 
 // server setup in action
 const PORT = process.env.PORT || 8000;

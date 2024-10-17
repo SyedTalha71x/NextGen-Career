@@ -7,14 +7,24 @@ import {
 } from "react-vertical-timeline-component";
 import "react-vertical-timeline-component/style.min.css";
 import { InfoCircleOutlined } from "@ant-design/icons";
-import { Tooltip } from "antd";
+import { message, Tooltip } from "antd";
 import { useStateManage } from "../../Context/StateContext";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const Roadmap = () => {
+  const navigate = useNavigate();
   const { API_URL, pathId } = useStateManage();
   const [data, setData] = useState({ roadmap: { steps: [] } }); 
   const [tooltipVisible, setTooltipVisible] = useState(false);
+
+  useEffect(() => {
+    if(!pathId){
+      message.info("Please enter the prompt first!")
+      navigate('/explorenow')
+    }
+  }, [])
+  
 
   useEffect(() => {
     console.log('Current pathId:', pathId);
