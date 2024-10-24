@@ -160,3 +160,34 @@ export const confirmSubscription = async (req,res)=>{
         
     }
 }
+export const checkUserSubscription = async (req, res) => {
+    try {
+      const userId = req.user?.userId;  // Extract user ID from authenticated user
+      if (!userId) {
+        return FailureResponse(res, 'User not authenticated', null, 401);
+      }
+  
+      // Query to check if the user has an active subscription
+      const query = `
+        SELECT * FROM user_subscription 
+        WHERE user_id = ? 
+        AND expiry_date >= NOW()
+      `;
+  
+      const subscriptionResult = await new Promise((resolve, reject) => {
+        pool.query(query, [userId], (err, results) => {
+          if (err) return reject(err);
+          resolve(results);
+        });
+      });
+  
+      if (subscriptionResult.length > 0) {
+        return SuccessResponse(res, 'Active subscription found', { isSubscribed: true }, 200);
+      } else {
+        return SuccessResponse(res, 'No active subscription', { isSubscribed: false }, 200);
+      }
+    } catch (error) {
+      console.log(error);
+      return FailureResponse(res, 'Internal Server Error', null, 500);
+    }
+  };

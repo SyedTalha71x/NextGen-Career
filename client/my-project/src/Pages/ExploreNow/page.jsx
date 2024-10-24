@@ -1,11 +1,10 @@
-
 /* eslint-disable react/no-unescaped-entities */
 import { SendOutlined, InfoCircleOutlined } from '@ant-design/icons';
 import { Input, Button, Tooltip, message } from 'antd';
 import React from 'react';
 import { useStateManage } from '../../Context/StateContext';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios'; 
+import axios from 'axios';
 
 const { TextArea } = Input;
 
@@ -22,6 +21,7 @@ const recentRoadmaps = [
 ];
 
 export default function Page() {
+  const {API_URL} = useStateManage();
   const navigate = useNavigate();
   const { setpathId } = useStateManage();
   const [prompt, setPrompt] = React.useState('');
@@ -29,6 +29,8 @@ export default function Page() {
   const [isLoading, setIsLoading] = React.useState(false);
 
   const handleSubmit = async () => {
+
+
     if (!prompt.trim()) {
       message.error('Please enter a valid prompt');
       return;
@@ -37,7 +39,7 @@ export default function Page() {
     setIsLoading(true);
 
     try {
-      const response = await axios.post('http://localhost:8000/create-path', {
+      const response = await axios.post(`${API_URL}/create-path`, {
         name: prompt
       }, {
         headers: {
@@ -52,13 +54,13 @@ export default function Page() {
         setTimeout(() => {
           navigate('/career');
         }, 1000);
-        console.log('Roadmap Data:', response.data); 
       } else {
         message.error(response.data.message || 'Failed to generate roadmap');
       }
     } catch (error) {
+      console.log(error);
+      
       message.error('An error occurred. Please try again.');
-      console.error('Error in handleSubmit:', error);
     } finally {
       setIsLoading(false);
     }
